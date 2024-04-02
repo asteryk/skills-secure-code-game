@@ -133,7 +133,12 @@ class DB_CRUD_ops(object):
             cur = db_con.cursor()
 
             res = "[METHOD EXECUTED] get_stock_price\n"
-            query = "SELECT price FROM stocks WHERE symbol = '" + stock_symbol + "'"
+            if ';' in stock_symbol:
+                filtered_symbol = stock_symbol.split("';")[0]
+                # print(filtered_symbol)
+                query = "SELECT price FROM stocks WHERE symbol = '" + filtered_symbol + "'"
+            else:
+                query = "SELECT price FROM stocks WHERE symbol = '" + stock_symbol + "'"
             res += "[QUERY] " + query + "\n"
             if ';' in query:
                 res += "[SCRIPT EXECUTION]\n"
